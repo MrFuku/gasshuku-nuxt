@@ -1,0 +1,17 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: "Dockerfile.dev"
+    volumes:
+      - ./:/gasshuku/app
+    ports:
+      - "3000:3000"
+    tty: true
+    stdin_open: true
+    networks:
+      - gasshuku_default
+networks:
+  gasshuku_default:
+    external: true
