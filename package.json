@@ -5,7 +5,7 @@
   "author": "MrFuku",
   "private": true,
   "scripts": {
-    "dev": "HOST=0.0.0.0 PORT=3000 nuxt",
+    "dev": "HOST=0.0.0.0 PORT=3000 API_HOST=localhost API_PORT=8080 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -13,6 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.9.5",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
