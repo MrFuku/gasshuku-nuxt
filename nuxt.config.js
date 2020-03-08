@@ -28,6 +28,10 @@ module.exports = {
     
   },
 
+  plugins: [
+    '@plugins/vuetify'
+  ],
+
   /*
   ** Build configuration
   */
