@@ -10,14 +10,16 @@
           label="tweetを投稿"
           type="text"
           @click:append-outer="sendComment"
-        ></v-text-field>
+        />
       </v-col>
-      <v-list-item
-        v-for="comment in comments"
-        :key="comment.id"
-      >
-        <Comment :comment="comment" />
-      </v-list-item>
+      <v-list>
+        <v-list-item
+          v-for="comment in comments"
+          :key="comment.id"
+        >
+          <Comment :comment="comment" />
+        </v-list-item>
+      </v-list>
     </section>
   </v-app>
 </template>
