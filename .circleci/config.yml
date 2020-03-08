@@ -1,13 +1,42 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-# Use a package of configuration called an orb.
-orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
-# Orchestrate or schedule a set of jobs
+jobs:
+  build:
+    docker:
+      - image: circleci/node:11.1
+    steps:
+      - checkout
+      - run: npm install
+  deploy:
+    working_directory: ~/gasshuku/app
+    docker:
+      - image: circleci/python:2.7-node-browsers
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: sudo pip install awscli
+      - run: $(aws ecr get-login --region ap-northeast-1 --no-include-email)
+      - run:
+          name: Build ECR API
+          command: |
+            docker build -t gasshuku-nuxt .
+      - run:
+          name: TAG ECR API
+          command: |
+            docker tag gasshuku-nuxt:latest $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/gasshuku-nuxt:latest
+      - run:
+          name: Deploy
+          command: |
+            bash ./deploy.sh
+# Workflows
 workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
+  version: 2.1
+  test_and_deploy:
     jobs:
-      - welcome/run
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
