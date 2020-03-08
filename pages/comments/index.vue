@@ -10,6 +10,7 @@
           label="tweetを投稿"
           type="text"
           @click:append-outer="sendComment"
+          @keydown.enter="sendComment"
         />
       </v-col>
       <v-list>
@@ -49,6 +50,7 @@ export default {
       this.comments.unshift(comment);
     },
     sendComment() {
+      if ( event.keyCode !== undefined && event.keyCode !== 13) return
       if (this.editContent === "") return;
       this.postComment(this.editContent);
       this.editContent = "";

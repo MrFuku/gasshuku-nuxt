@@ -7,11 +7,12 @@
       </span>
       <span v-else>
         <v-text-field
+          autofocus
           v-model="editContent"
-          append-icon="mdi-close-circle"
-          append-outer-icon="mdi-check-outline"
-          @click:append="isEdit=false"
-          @click:append-outer="commit()"
+          append-icon="mdi-check-outline"
+          @click:append="commit"
+          @keydown.enter="commit"
+          @blur="isEdit=false"
         >
         </v-text-field>
       </span>
@@ -45,9 +46,10 @@ export default {
       this.isEdit = true;
     },
     commit() {
-      if (this.editContent === "") return
-      this.comment.Content = this.editContent
-      this.updateComment(this.comment)
+      if (event.keyCode !== undefined && event.keyCode !== 13) return;
+      if (this.editContent === "") return;
+      this.comment.Content = this.editContent;
+      this.updateComment(this.comment);
       this.isEdit = false;
     }
   }
