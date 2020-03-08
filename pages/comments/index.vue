@@ -16,7 +16,7 @@
         v-for="comment in comments"
         :key="comment.id"
       >
-        <v-list-item-content>{{ comment.Content }}</v-list-item-content>
+        <Comment :comment="comment" />
       </v-list-item>
     </section>
   </v-app>
