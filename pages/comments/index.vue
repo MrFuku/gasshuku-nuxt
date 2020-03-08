@@ -12,16 +12,12 @@
           @click:append-outer="sendComment"
         ></v-text-field>
       </v-col>
-      <ul>
-        <li
-          v-for="comment in comments"
-          :key="comment.id"
-        >
-          <p>
-            <span>{{ comment.Content }} user by: {{ comment.UserId }}</span>
-          </p>
-        </li>
-      </ul>
+      <v-list-item
+        v-for="comment in comments"
+        :key="comment.id"
+      >
+        <v-list-item-content>{{ comment.Content }}</v-list-item-content>
+      </v-list-item>
     </section>
   </v-app>
 </template>
