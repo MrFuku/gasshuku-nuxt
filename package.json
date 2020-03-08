@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "HOST=0.0.0.0 PORT=3000 API_HOST=localhost API_PORT=8080 nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "build": "API_HOST=gasshuku-alb-1952549433.ap-northeast-1.elb.amazonaws.com API_PORT=8080 nuxt build",
+    "start": "HOST=0.0.0.0 PORT=3000 nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
