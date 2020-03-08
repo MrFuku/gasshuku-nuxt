@@ -1,43 +1,8 @@
 version: 2.1
 jobs:
   build:
-    docker:
-      - image: circleci/node:11.1
-    working_directory: /gasshuku/app
+    docker: 
+      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
     steps:
-      - checkout
-      - run: npm install
-  deploy:
-    working_directory: ~/gasshuku/app
-    docker:
-      - image: circleci/python:2.7-node-browsers
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: sudo pip install awscli
-      - run: $(aws ecr get-login --region ap-northeast-1 --no-include-email)
-      - run:
-          name: Build ECR API
-          command: |
-            docker build -t gasshuku-nuxt .
-      - run:
-          name: TAG ECR API
-          command: |
-            docker tag gasshuku-nuxt:latest $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/gasshuku-nuxt:latest
-      - run:
-          name: Deploy
-          command: |
-            bash ./deploy.sh
-# Workflows
-workflows:
-  version: 2.1
-  test_and_deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only:
-                - master
+      - checkout # check out the code in the project directory
+      - run: echo "hello world" # run the `echo` command
